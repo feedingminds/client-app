@@ -1,16 +1,18 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { Login, Register } from '../auth/components'
+import { Home } from '../home'
 import { Layout } from '../layout'
 import { MentorsGrid } from '../mentors'
+import { Sessions } from '../sessions'
 
 export const AppRouter = () => {
   return (
     <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<h1>Publicaciones recientes</h1>} />
+          <Route index element={<Home />} />
           <Route path="mentors" element={<MentorsGrid />} />
-          <Route path="courses" element={<>Cursos</>} />
+          <Route path="sessions" element={<Sessions />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

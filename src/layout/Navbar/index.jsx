@@ -28,25 +28,31 @@ import {
   AiOutlineVideoCamera,
   AiOutlineRead,
 } from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/authSlice'
 
 export const Navbar = () => {
   const bg = useColorModeValue('white', 'gray.800')
   const mobileNav = useDisclosure()
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+  const location = useLocation()
 
   const navigateToMentors = () => {
     navigate('/mentors')
   }
 
-  const navigateToCourses = () => {
-    navigate('/courses')
+  const navigateToSessions = () => {
+    navigate('/sessions')
   }
 
   const navigateToPosts = () => {
     navigate('/')
   }
 
+  const handleLogin = () => {
+    navigate('/login')
+  }
   return (
     <React.Fragment>
       <chakra.header
@@ -83,6 +89,7 @@ export const Navbar = () => {
                 spacing={3}
                 rounded="sm"
                 shadow="sm"
+                zIndex={'100'}
               >
                 <CloseButton
                   aria-label="Close menu"
@@ -91,26 +98,30 @@ export const Navbar = () => {
                 />
                 <Button
                   w="full"
-                  variant="ghost"
+                  variant={
+                    location.pathname === '/sessions' ? 'solid' : 'ghost'
+                  }
                   leftIcon={<AiOutlineVideoCamera />}
-                  onClick={navigateToCourses}
+                  onClick={navigateToSessions}
+                  colorScheme={'blue'}
                 >
-                  Cursos
+                  Sesiones
                 </Button>
                 <Button
                   w="full"
-                  variant="solid"
-                  colorScheme="blue"
+                  variant={location.pathname === '/mentors' ? 'solid' : 'ghost'}
                   leftIcon={<AiOutlineUser />}
                   onClick={navigateToMentors}
+                  colorScheme={'blue'}
                 >
                   Mentores
                 </Button>
                 <Button
                   w="full"
-                  variant="ghost"
+                  variant={location.pathname === '/' ? 'solid' : 'ghost'}
                   leftIcon={<AiOutlineRead />}
                   onClick={navigateToPosts}
+                  colorScheme={'blue'}
                 >
                   Publicaciones
                 </Button>
@@ -132,27 +143,29 @@ export const Navbar = () => {
             </chakra.a>
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}>
               <Button
-                variant="ghost"
                 leftIcon={<AiOutlineVideoCamera />}
                 size="sm"
-                onClick={navigateToCourses}
+                onClick={navigateToSessions}
+                colorScheme="blue"
+                variant={location.pathname === '/sessions' ? 'solid' : 'ghost'}
               >
-                Cursos
+                Sesiones
               </Button>
               <Button
-                variant="solid"
                 colorScheme="blue"
                 leftIcon={<AiOutlineUser />}
                 size="sm"
                 onClick={navigateToMentors}
+                variant={location.pathname === '/mentors' ? 'solid' : 'ghost'}
               >
                 Mentores
               </Button>
               <Button
-                variant="ghost"
                 leftIcon={<AiOutlineRead />}
                 size="sm"
                 onClick={navigateToPosts}
+                colorScheme="blue"
+                variant={location.pathname === '/' ? 'solid' : 'ghost'}
               >
                 Publicaciones
               </Button>
@@ -163,29 +176,17 @@ export const Navbar = () => {
             display={mobileNav.isOpen ? 'none' : 'flex'}
             alignItems="center"
           >
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <AiOutlineSearch />
-              </InputLeftElement>
-              <Input type="tel" placeholder="Search..." />
-            </InputGroup>
-
-            <chakra.a
-              p={3}
-              color="gray.800"
-              _dark={{ color: 'inherit' }}
-              rounded="sm"
-              _hover={{ color: 'gray.800', _dark: { color: 'gray.600' } }}
-            >
-              <AiFillBell />
-              <VisuallyHidden>Notifications</VisuallyHidden>
-            </chakra.a>
-
-            <Avatar
-              size="sm"
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
-            />
+            {isAuthenticated ? (
+              <Avatar
+                size="sm"
+                name="Dan Abrahmov"
+                src="https://bit.ly/dan-abramov"
+              />
+            ) : (
+              <Button onClick={handleLogin} colorScheme="blue">
+                Iniciar sesión
+              </Button>
+            )}
           </HStack>
         </Flex>
       </chakra.header>

@@ -12,10 +12,28 @@ import {
   useColorModeValue,
   Image,
 } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { login, useAuth } from '../../authSlice'
 
 export function Login() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { status, isAuthenticated } = useAuth()
+
+  const handleLogin = () => {
+    dispatch(
+      login({
+        email: 'leonardo@gmail.com',
+        password: '123456',
+      })
+    )
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />
+  }
+
   return (
     <Box
       w={['full', 'md']}
@@ -59,7 +77,13 @@ export function Login() {
             ¿Olvidaste tu contraseña?
           </Button>
         </HStack>
-        <Button colorScheme="blue" w={['full', 'auto']} alignSelf="end">
+        <Button
+          colorScheme="blue"
+          w={['full', 'auto']}
+          alignSelf="end"
+          isLoading={status === 'loading'}
+          onClick={handleLogin}
+        >
           Ingresar
         </Button>
       </VStack>
