@@ -38,6 +38,10 @@ export const Navbar = () => {
   const { isAuthenticated } = useAuth()
   const location = useLocation()
 
+  const navigateToProfile = () => {
+    navigate('/profile')
+  }
+
   const navigateToMentors = () => {
     navigate('/mentors')
   }
@@ -181,6 +185,8 @@ export const Navbar = () => {
                 size="sm"
                 name="Dan Abrahmov"
                 src="https://bit.ly/dan-abramov"
+                onClick={navigateToProfile}
+                cursor={'pointer'}
               />
             ) : (
               <Button onClick={handleLogin} colorScheme="blue">
