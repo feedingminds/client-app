@@ -1,12 +1,7 @@
-import { Avatar, AvatarProps, Box, Flex, FlexProps, useColorModeValue } from '@chakra-ui/react'
+import { Avatar, Box, Flex, useColorModeValue } from '@chakra-ui/react'
 import * as React from 'react'
 
-interface CardWithAvatarProps extends FlexProps {
-  avatarProps: AvatarProps
-  action?: React.ReactNode
-}
-
-export const CardWithAvatar = (props: CardWithAvatarProps) => {
+export const CardWithAvatar = (props) => {
   const { action, avatarProps, children, ...rest } = props
   return (
     <Flex

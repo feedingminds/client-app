@@ -20,7 +20,7 @@ export function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { status, isAuthenticated } = useAuth()
-
+  const colorMode = useColorModeValue('md', 'md-dark')
   const handleLogin = () => {
     dispatch(
       login({
@@ -41,7 +41,7 @@ export function Login() {
       mt={[20, '10vh']}
       mx="auto"
       borderRadius={{ base: 'none', sm: 'xl' }}
-      boxShadow={{ base: 'none', sm: useColorModeValue('md', 'md-dark') }}
+      boxShadow={{ base: 'none', sm: colorMode }}
     >
       <VStack spacing={4} align="flex-start" w="full">
         <VStack spacing={1} align={['flex-start', 'center']} w="full">

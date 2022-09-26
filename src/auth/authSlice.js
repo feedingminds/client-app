@@ -1,7 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
-import { fetchLogin } from './authApi'
 import * as Utils from './utils'
+
+export function fetchLogin(email, password) {
+  return new Promise((resolve, reject) => {
+    if (email === 'leonardo@gmail.com' && password.length > 5) {
+      setTimeout(
+        () =>
+          resolve({
+            isAuthenticated: true,
+          }),
+        3000
+      )
+    } else {
+      setTimeout(() => reject('Razon del error'), 3000)
+    }
+  })
+}
 
 const initialState = {
   status: 'idle',
@@ -27,6 +42,10 @@ export const authSlice = createSlice({
       state.isAuthenticated = false
       Utils.setIsAuth(false)
     },
+    setIsAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload
+      Utils.setIsAuth(action.payload)
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
@@ -43,7 +62,7 @@ export const authSlice = createSlice({
   },
 })
 
-export const { logout } = authSlice.actions
+export const { logout, setIsAuthenticated } = authSlice.actions
 
 export const useAuth = () => useSelector((state) => state.auth)
 

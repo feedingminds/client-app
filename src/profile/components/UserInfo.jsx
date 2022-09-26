@@ -1,14 +1,8 @@
-import { HStack, Icon, Stack, StackProps, Text, useColorModeValue } from '@chakra-ui/react'
+import { HStack, Icon, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import * as React from 'react'
 import { HiCalendar, HiLink, HiLocationMarker } from 'react-icons/hi'
 
-interface UserInfoProps extends StackProps {
-  location: string
-  website: string
-  memberSince: string
-}
-
-export const UserInfo = (props: UserInfoProps) => {
+export const UserInfo = (props) => {
   const { location, website, memberSince, ...stackProps } = props
   return (
     <Stack

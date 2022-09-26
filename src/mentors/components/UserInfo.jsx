@@ -1,21 +1,8 @@
-import {
-  HStack,
-  Icon,
-  StackProps,
-  Text,
-  useColorModeValue,
-  VStack,
-} from '@chakra-ui/react'
+import { HStack, Icon, Text, useColorModeValue, VStack } from '@chakra-ui/react'
 import * as React from 'react'
 import { HiBadgeCheck } from 'react-icons/hi'
 
-interface UserInfoProps extends StackProps {
-  name: string
-  bio: string
-  isVerified?: boolean
-}
-
-export const UserInfo = (props: UserInfoProps) => {
+export const UserInfo = (props) => {
   const { name, bio, isVerified, ...stackProps } = props
   return (
     <React.Fragment>

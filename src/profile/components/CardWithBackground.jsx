@@ -1,5 +1,4 @@
 import { Box, Button, Heading, Text, useColorModeValue } from '@chakra-ui/react'
-import * as React from 'react'
 import { HiPencilAlt } from 'react-icons/hi'
 import { CardContent } from './CardContent'
 import { CardWithAvatar } from './CardWithAvatar'
