@@ -7,3 +7,13 @@ export const getIsAuth = () => {
 export const setIsAuth = (isLoggedIn) => {
   localStorage.setItem('IS_AUTHENTICATED', JSON.stringify(isLoggedIn))
 }
+
+export const getUserId = () => {
+  return localStorage.getItem('USER_ID')
+    ? JSON.parse(localStorage.getItem('USER_ID'))
+    : null
+}
+
+export const setUserId = (userId) => {
+  localStorage.setItem('USER_ID', JSON.stringify(userId))
+}

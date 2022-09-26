@@ -1,6 +1,5 @@
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Login, Register } from '../auth/components'
-import { Home } from '../home'
 import { Layout } from '../layout'
 import { MentorsGrid } from '../mentors'
 import { Profile } from '../profile'
@@ -11,7 +10,7 @@ export const AppRouter = () => {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Navigate to="mentors" replace={true} />} />
           <Route path="mentors" element={<MentorsGrid />} />
           <Route path="sessions" element={<Sessions />} />
           <Route path="profile" element={<Profile />} />

@@ -102,17 +102,6 @@ export const Navbar = () => {
                 />
                 <Button
                   w="full"
-                  variant={
-                    location.pathname === '/sessions' ? 'solid' : 'ghost'
-                  }
-                  leftIcon={<AiOutlineVideoCamera />}
-                  onClick={navigateToSessions}
-                  colorScheme={'blue'}
-                >
-                  Sesiones
-                </Button>
-                <Button
-                  w="full"
                   variant={location.pathname === '/mentors' ? 'solid' : 'ghost'}
                   leftIcon={<AiOutlineUser />}
                   onClick={navigateToMentors}
@@ -122,12 +111,14 @@ export const Navbar = () => {
                 </Button>
                 <Button
                   w="full"
-                  variant={location.pathname === '/' ? 'solid' : 'ghost'}
-                  leftIcon={<AiOutlineRead />}
-                  onClick={navigateToPosts}
+                  variant={
+                    location.pathname === '/sessions' ? 'solid' : 'ghost'
+                  }
+                  leftIcon={<AiOutlineVideoCamera />}
+                  onClick={navigateToSessions}
                   colorScheme={'blue'}
                 >
-                  Publicaciones
+                  Sesiones
                 </Button>
               </VStack>
             </Box>
@@ -147,15 +138,6 @@ export const Navbar = () => {
             </chakra.a>
             <HStack spacing={3} display={{ base: 'none', md: 'inline-flex' }}>
               <Button
-                leftIcon={<AiOutlineVideoCamera />}
-                size="sm"
-                onClick={navigateToSessions}
-                colorScheme="blue"
-                variant={location.pathname === '/sessions' ? 'solid' : 'ghost'}
-              >
-                Sesiones
-              </Button>
-              <Button
                 colorScheme="blue"
                 leftIcon={<AiOutlineUser />}
                 size="sm"
@@ -165,13 +147,13 @@ export const Navbar = () => {
                 Mentores
               </Button>
               <Button
-                leftIcon={<AiOutlineRead />}
+                leftIcon={<AiOutlineVideoCamera />}
                 size="sm"
-                onClick={navigateToPosts}
+                onClick={navigateToSessions}
                 colorScheme="blue"
-                variant={location.pathname === '/' ? 'solid' : 'ghost'}
+                variant={location.pathname === '/sessions' ? 'solid' : 'ghost'}
               >
-                Publicaciones
+                Sesiones
               </Button>
             </HStack>
           </HStack>

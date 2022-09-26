@@ -21,6 +21,7 @@ export function fetchLogin(email, password) {
 const initialState = {
   status: 'idle',
   isAuthenticated: Utils.getIsAuth(),
+  userId: Utils.getUserId(),
 }
 
 export const login = createAsyncThunk('auth/login', async (data, thunkApi) => {
@@ -46,6 +47,10 @@ export const authSlice = createSlice({
       state.isAuthenticated = action.payload
       Utils.setIsAuth(action.payload)
     },
+    setUserId: (state, action) => {
+      state.userId = action.payload
+      Utils.setUserId(action.payload)
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
@@ -62,7 +67,7 @@ export const authSlice = createSlice({
   },
 })
 
-export const { logout, setIsAuthenticated } = authSlice.actions
+export const { logout, setIsAuthenticated, setUserId } = authSlice.actions
 
 export const useAuth = () => useSelector((state) => state.auth)
 

@@ -18,17 +18,19 @@ import { useDispatch } from 'react-redux'
 import { Navigate, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { useCreateUserMutation } from '../../authApi'
-import { setIsAuthenticated, useAuth } from '../../authSlice'
+import { setIsAuthenticated, setUserId, useAuth } from '../../authSlice'
 
 export function Register() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isAuthenticated } = useAuth()
-  const [registerUser, { isSuccess, isLoading }] = useCreateUserMutation()
+  const [registerUser, { isSuccess, isLoading, data: user }] =
+    useCreateUserMutation()
   const colorMode = useColorModeValue('md', 'md-dark')
   useEffect(() => {
     if (isSuccess) {
       dispatch(setIsAuthenticated(true))
+      dispatch(setUserId(user?.id))
     }
   }, [isSuccess, dispatch])
 
