@@ -14,79 +14,114 @@ import {
 } from '@chakra-ui/react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { login, useAuth } from '../../authSlice'
+import { setIsAuthenticated, setUserId, useAuth } from '../../authSlice'
+import { useLoginMutation } from '../../authApi'
+import { useEffect } from 'react'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
 export function Login() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { status, isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth()
   const colorMode = useColorModeValue('md', 'md-dark')
-  const handleLogin = () => {
-    dispatch(
-      login({
-        email: 'leonardo@gmail.com',
-        password: '123456',
-      })
-    )
-  }
+  const [login, { isSuccess, data: user, isLoading }] = useLoginMutation()
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setIsAuthenticated(true))
+      dispatch(setUserId(user?.id))
+    }
+  }, [isSuccess, dispatch, user?.id])
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />
   }
 
   return (
-    <Box
-      w={['full', 'md']}
-      p={[8, 10]}
-      mt={[20, '10vh']}
-      mx="auto"
-      borderRadius={{ base: 'none', sm: 'xl' }}
-      boxShadow={{ base: 'none', sm: colorMode }}
+    <Formik
+      initialValues={{
+        name: '',
+        password: '',
+        role: 'STUDENT_ROLE',
+        email: '',
+      }}
+      onSubmit={(values) => {
+        login(values)
+      }}
+      validationSchema={Yup.object({
+        email: Yup.string()
+          .email('Debe de ingresar un email valido')
+          .required('El email es requerido'),
+        password: Yup.string()
+          .min(6, 'Debe de tener al menos 6 caracteres')
+          .required('Este campo es requerido'),
+      })}
     >
-      <VStack spacing={4} align="flex-start" w="full">
-        <VStack spacing={1} align={['flex-start', 'center']} w="full">
-          <Box>
-            <Image
-              src="https://feedingmindsperu.com/assets/img/logo.svg"
-              alt="Feeding Minds Perú Logo"
-            />
-          </Box>
-          <Heading>Iniciar Sesión</Heading>
-          <Text display={'flex'} gap={2}>
-            ¿No tienes una cuenta?
-            <Button
-              variant="link"
-              colorScheme="blue"
-              onClick={() => navigate('/register')}
-            >
-              Registrarse
-            </Button>
-          </Text>
-        </VStack>
-        <FormControl>
-          <FormLabel>Correo</FormLabel>
-          <Input variant="filled" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Contraseña</FormLabel>
-          <Input variant="filled" type="password" />
-        </FormControl>
-        <HStack w="full" justify="space-between">
-          <Checkbox>Recuérdame</Checkbox>
-          <Button variant="link" colorScheme="blue">
-            ¿Olvidaste tu contraseña?
-          </Button>
-        </HStack>
-        <Button
-          colorScheme="blue"
-          w={['full', 'auto']}
-          alignSelf="end"
-          isLoading={status === 'loading'}
-          onClick={handleLogin}
+      {({ getFieldProps, handleSubmit }) => (
+        <Box
+          w={['full', 'md']}
+          p={[8, 10]}
+          mt={[20, '10vh']}
+          mx="auto"
+          borderRadius={{ base: 'none', sm: 'xl' }}
+          boxShadow={{ base: 'none', sm: colorMode }}
         >
-          Ingresar
-        </Button>
-      </VStack>
-    </Box>
+          <VStack spacing={4} align="flex-start" w="full">
+            <VStack spacing={1} align={['flex-start', 'center']} w="full">
+              <Box>
+                <Image
+                  src="https://feedingmindsperu.com/assets/img/logo.svg"
+                  alt="Feeding Minds Perú Logo"
+                />
+              </Box>
+              <Heading>Iniciar Sesión</Heading>
+              <Text display={'flex'} gap={2}>
+                ¿No tienes una cuenta?
+                <Button
+                  variant="link"
+                  colorScheme="blue"
+                  onClick={() => navigate('/register')}
+                >
+                  Registrarse
+                </Button>
+              </Text>
+            </VStack>
+            <FormControl>
+              <FormLabel>Correo</FormLabel>
+              <Input
+                variant="filled"
+                name="email"
+                {...getFieldProps('email')}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Contraseña</FormLabel>
+              <Input
+                variant="filled"
+                type="password"
+                name="password"
+                {...getFieldProps('password')}
+              />
+            </FormControl>
+            <HStack w="full" justify="space-between">
+              <Checkbox>Recuérdame</Checkbox>
+              <Button variant="link" colorScheme="blue">
+                ¿Olvidaste tu contraseña?
+              </Button>
+            </HStack>
+            <Button
+              colorScheme="blue"
+              w={['full', 'auto']}
+              alignSelf="end"
+              isLoading={isLoading}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Ingresar
+            </Button>
+          </VStack>
+        </Box>
+      )}
+    </Formik>
   )
 }

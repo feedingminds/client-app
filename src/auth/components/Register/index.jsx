@@ -32,7 +32,7 @@ export function Register() {
       dispatch(setIsAuthenticated(true))
       dispatch(setUserId(user?.id))
     }
-  }, [isSuccess, dispatch])
+  }, [isSuccess, dispatch, user?.id])
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />
@@ -55,7 +55,7 @@ export function Register() {
           .email('Debe de ingresar un email valido')
           .required('El email es requerido'),
         password: Yup.string()
-          .min(8, 'Debe de tener al menos 8 caracteres')
+          .min(6, 'Debe de tener al menos 6 caracteres')
           .required('Este campo es requerido'),
         role: Yup.string().required('Este campo es requerido'),
       })}

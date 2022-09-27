@@ -4,7 +4,7 @@ import { API_URL } from '../constants'
 export const authAPI = createApi({
   reducerPath: 'authAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: API_URL + '/users',
+    baseUrl: API_URL + '/auth',
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH',
@@ -17,7 +17,14 @@ export const authAPI = createApi({
   endpoints: (builder) => ({
     createUser: builder.mutation({
       query: (data) => ({
-        url: '/',
+        url: '/register',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    login: builder.mutation({
+      query: (data) => ({
+        url: '/login',
         method: 'POST',
         body: data,
       }),
@@ -27,4 +34,4 @@ export const authAPI = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useCreateUserMutation } = authAPI
+export const { useCreateUserMutation, useLoginMutation } = authAPI
