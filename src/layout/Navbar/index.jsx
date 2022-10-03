@@ -64,7 +64,10 @@ export const Navbar = () => {
         w="full"
         px={{ base: 2, sm: 4 }}
         py={4}
+        // boxShadow={'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px'}
         shadow="md"
+        position="fixed"
+        zIndex={1000}
       >
         <Flex alignItems="center" justifyContent="space-between" mx="auto">
           <HStack display="flex" spacing={3} alignItems="center">
@@ -178,6 +181,11 @@ export const Navbar = () => {
           </HStack>
         </Flex>
       </chakra.header>
+      <div
+        style={{
+          height: '77px',
+        }}
+      />
     </React.Fragment>
   )
 }
