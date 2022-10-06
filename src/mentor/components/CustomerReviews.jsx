@@ -25,6 +25,7 @@ export const CustomerReviews = (props) => {
         fontSize="sm"
         fontWeight="medium"
         color={useColorModeValue('gray.600', 'gray.300')}
+        textAlign="justify"
       >
         ({reviewCount})
       </Text>

@@ -1,9 +1,10 @@
 import { HStack, Icon, Stack, Text, useColorModeValue } from '@chakra-ui/react'
 import * as React from 'react'
-import { HiCalendar, HiLink, HiLocationMarker } from 'react-icons/hi'
+import { HiAcademicCap } from 'react-icons/hi'
+import { FaUniversity, FaLinkedin } from 'react-icons/fa'
 
 export const UserInfo = (props) => {
-  const { location, website, memberSince, ...stackProps } = props
+  const { career, university, linkedin, ...stackProps } = props
   return (
     <Stack
       direction={{ base: 'column', sm: 'row' }}
@@ -15,16 +16,16 @@ export const UserInfo = (props) => {
       {...stackProps}
     >
       <HStack>
-        <Icon as={HiLocationMarker} />
-        <Text>{location}</Text>
+        <Icon as={HiAcademicCap} />
+        <Text>{career}</Text>
       </HStack>
       <HStack>
-        <Icon as={HiLink} />
-        <Text>{website}</Text>
+        <Icon as={FaUniversity} />
+        <Text>{university}</Text>
       </HStack>
       <HStack>
-        <Icon as={HiCalendar} />
-        <Text>{memberSince}</Text>
+        <Icon as={FaLinkedin} />
+        <Text>{linkedin}</Text>
       </HStack>
     </Stack>
   )

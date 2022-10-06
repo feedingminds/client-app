@@ -27,9 +27,9 @@ export const CardWithBackground = () => (
           Frontend Developer &amp; UI Designer
         </Text>
         <UserInfo
-          location="Memphis, USA"
-          website="esther.com"
-          memberSince="Joined Sept. 2019"
+          career="Economía"
+          university="Univesidad Peruana de Ciencias Aplicadas"
+          linkedin="@john.doe"
         />
       </CardContent>
     </CardWithAvatar>

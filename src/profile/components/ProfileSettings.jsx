@@ -78,20 +78,74 @@ export const ProfileSettings = () => {
                       disabled
                     />
                   </FormControl>
-                  <FormControl id="profession">
-                    <FormLabel>Profesión</FormLabel>
+                  <FormControl id="about">
+                    <FormLabel>Sobre mí</FormLabel>
+                    <Textarea
+                      rows={5}
+                      name="about"
+                      {...getFieldProps('about')}
+                    />
+                    <FormHelperText>
+                      Breve descripción de tu perfil.
+                    </FormHelperText>
+                  </FormControl>
+                </VStack>
+              </FieldGroup>
+              <FieldGroup title="Infomación Profesional">
+                <VStack width="full" spacing="6">
+                  <FormControl id="career">
+                    <FormLabel>Carrera</FormLabel>
                     <Input
                       type="text"
-                      name="profession"
-                      {...getFieldProps('profession')}
+                      maxLength={255}
+                      name="career"
+                      {...getFieldProps('career')}
                     />
                   </FormControl>
-                  <FormControl id="bio">
-                    <FormLabel>Bio</FormLabel>
-                    <Textarea rows={5} name="bio" {...getFieldProps('bio')} />
-                    <FormHelperText>
-                      Brief description for your profile. URLs are hyperlinked.
-                    </FormHelperText>
+                  <FormControl id="university">
+                    <FormLabel>Centro de Estudios</FormLabel>
+                    <Input
+                      type="text"
+                      maxLength={255}
+                      name="university"
+                      {...getFieldProps('university')}
+                    />
+                  </FormControl>
+                  <FormControl id="job">
+                    <FormLabel>Cargo</FormLabel>
+                    <Input
+                      type="text"
+                      maxLength={255}
+                      name="job"
+                      {...getFieldProps('job')}
+                    />
+                  </FormControl>
+                  <FormControl id="experience">
+                    <FormLabel>Experiencia</FormLabel>
+                    <Input
+                      type="text"
+                      maxLength={255}
+                      name="experience"
+                      {...getFieldProps('experience')}
+                    />
+                  </FormControl>
+                  <FormControl id="nationality">
+                    <FormLabel>Nacional/Internacional</FormLabel>
+                    <Input
+                      type="text"
+                      maxLength={255}
+                      name="nationality"
+                      {...getFieldProps('nationality')}
+                    />
+                  </FormControl>
+                  <FormControl id="genre">
+                    <FormLabel>Sexo</FormLabel>
+                    <Input
+                      type="text"
+                      maxLength={255}
+                      name="genre"
+                      {...getFieldProps('genre')}
+                    />
                   </FormControl>
                 </VStack>
               </FieldGroup>

@@ -17,12 +17,26 @@ import { FaUniversity, FaLinkedin } from 'react-icons/fa'
 import { BiTimeFive } from 'react-icons/bi'
 import { Card } from './Card'
 import { CustomerReviews } from './CustomerReviews'
+import { Comments } from './Comments'
 
 export const App = () => {
-  const bg = useColorModeValue('gray.100', 'gray.800')
   return (
-    <Box as="section" bg={bg} py="12" minH="calc(100vh - 77px)">
-      <Card>
+    <Box
+      as="section"
+      bg={'white'}
+      py="12"
+      minH="calc(100vh - 77px)"
+      position="relative"
+    >
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        width="100%"
+        height="32"
+        bg="blue.600"
+      />
+      <Card my="35px">
         <Stack
           direction={{ base: 'column', md: 'row' }}
           spacing={{ base: '3', md: '10' }}
@@ -134,6 +148,7 @@ export const App = () => {
           Contact me
         </Button>
       </Card>
+      <Comments />
     </Box>
   )
 }
