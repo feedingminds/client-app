@@ -17,6 +17,7 @@ import {
   Select,
   InputGroup,
   InputLeftAddon,
+  useToast,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import * as React from 'react'
@@ -37,13 +38,26 @@ export const ProfileSettings = () => {
     photoURL = '',
     bio = '',
   } = user
-  const [updateUser, { isLoading }] = useUpdateUserMutation()
+  const [updateUser, { isLoading, isSuccess }] = useUpdateUserMutation()
+  // TODO: Formulario para Estudiantes
+  const toast = useToast()
+  React.useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: 'Perfil actualizado',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+      })
+    }
+  }, [isSuccess])
 
   return (
     <Formik
       initialValues={{ name, email, profession, photoURL, bio }}
       enableReinitialize
       onSubmit={(values) => {
+        console.log({ values })
         updateUser([userId, values])
       }}
     >
@@ -94,6 +108,7 @@ export const ProfileSettings = () => {
                   </FormControl>
                 </VStack>
               </FieldGroup>
+              {/* //TODO: Actualizar Infomación Profesional */}
               <FieldGroup title="Infomación Profesional">
                 <VStack width="full" spacing="6">
                   <FormControl id="career">

@@ -1,0 +1,17 @@
+@media screen and (max-width: 1440px) {
+  .SvgHero {
+    height: 40% !important;
+  }
+}
+
+@media screen and (max-width: 1160px) {
+  .SvgHero {
+    height: 20% !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .SvgHero {
+    display: none;
+  }
+}

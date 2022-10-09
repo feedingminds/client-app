@@ -2423,6 +2423,11 @@ async-validator@^4.1.0:
   resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-4.2.5.tgz#c96ea3332a521699d0afaaceed510a54656c6339"
   integrity sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==
 
+average-rating@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/average-rating/-/average-rating-2.0.3.tgz#6ed845327802b37a576464d2039a46f085ebe887"
+  integrity sha512-tQ77b7WshHMJp2PHRXOG0Uefrlc2xg41rbRTT1ZD0PczINk5nZQLOjlnepBwyhnTlBmEsRWclhDn7gpeWCm+4A==
+
 axe-core@^4.4.3:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.4.3.tgz#11c74d23d5013c0fa5d183796729bc3482bd2f6f"

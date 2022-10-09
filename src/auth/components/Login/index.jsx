@@ -11,6 +11,7 @@ import {
   VStack,
   useColorModeValue,
   Image,
+  useToast,
 } from '@chakra-ui/react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -25,13 +26,27 @@ export function Login() {
   const dispatch = useDispatch()
   const { isAuthenticated } = useAuth()
   const colorMode = useColorModeValue('md', 'md-dark')
-  const [login, { isSuccess, data: user, isLoading }] = useLoginMutation()
+  const [login, { isSuccess, data: user, isLoading, error }] =
+    useLoginMutation()
+  const toast = useToast()
+  console.log({ error })
   useEffect(() => {
     if (isSuccess) {
       dispatch(setIsAuthenticated(true))
       dispatch(setUserId(user?.id))
     }
   }, [isSuccess, dispatch, user?.id])
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: error.data.message,
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      })
+    }
+  }, [error])
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />
@@ -40,9 +55,7 @@ export function Login() {
   return (
     <Formik
       initialValues={{
-        name: '',
         password: '',
-        role: 'STUDENT_ROLE',
         email: '',
       }}
       onSubmit={(values) => {

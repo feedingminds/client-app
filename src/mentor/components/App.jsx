@@ -13,13 +13,19 @@ import {
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { HiShieldCheck, HiAcademicCap } from 'react-icons/hi'
-import { FaUniversity, FaLinkedin } from 'react-icons/fa'
+import { FaUniversity } from 'react-icons/fa'
 import { BiTimeFive } from 'react-icons/bi'
 import { Card } from './Card'
 import { CustomerReviews } from './CustomerReviews'
 import { Comments } from './Comments'
+import { useGetUserByIdQuery } from '../../api/usersAPI'
+import { useParams } from 'react-router-dom'
+import { FiLinkedin } from 'react-icons/fi'
 
 export const App = () => {
+  const { mentorId } = useParams()
+  const { data: mentor = {} } = useGetUserByIdQuery(mentorId)
+  const { name, photoURL, rating, average } = mentor
   return (
     <Box
       as="section"
@@ -43,11 +49,7 @@ export const App = () => {
           align="flex-start"
         >
           <Stack spacing="4">
-            <Avatar
-              size="2xl"
-              src="https://images.unsplash.com/photo-1542103749-8ef59b94f47e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjY5fHxsYWR5JTIwc21pbGluZ3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
-              name="Melinda Paul"
-            />
+            <Avatar size="2xl" src={photoURL} name={name} />
             <Button
               width="full"
               colorScheme="blue"
@@ -62,7 +64,7 @@ export const App = () => {
               direction={{ base: 'column', md: 'row' }}
             >
               <Text as="h2" fontWeight="bold" fontSize="xl">
-                Melinda Paul
+                {name}
               </Text>
               <HStack fontSize={{ base: 'md', md: 'lg' }}>
                 <Text
@@ -72,13 +74,19 @@ export const App = () => {
                 >
                   @meldesigner
                 </Text>
-                <Icon as={HiShieldCheck} color="green.500" />
+                <Icon as={FiLinkedin} color="blue.500" />
               </HStack>
             </Stack>
             <Text mt="2">Head Of Customer Experience</Text>
             <Wrap shouldWrapChildren my="4" spacing="4">
               <VStack flexDir={'column'} alignItems="flex-start">
-                <CustomerReviews reviewCount={84} rating={5.0} />
+                <CustomerReviews
+                  reviewCount={
+                    rating &&
+                    rating[1] + rating[2] + rating[3] + rating[4] + rating[5]
+                  }
+                  rating={average}
+                />
                 <HStack>
                   <Icon as={HiAcademicCap} fontSize="xl" color="gray.400" />
                   <Text
@@ -145,7 +153,7 @@ export const App = () => {
           </Box>
         </Stack>
         <Button mt="8" width="full" colorScheme="blue" display={{ md: 'none' }}>
-          Contact me
+          Contáctame{' '}
         </Button>
       </Card>
       <Comments />

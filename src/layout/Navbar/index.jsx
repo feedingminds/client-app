@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import {
   chakra,
@@ -12,24 +12,19 @@ import {
   VStack,
   IconButton,
   CloseButton,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Avatar,
   Image,
 } from '@chakra-ui/react'
 import {
   AiOutlineMenu,
-  AiFillHome,
-  AiOutlineInbox,
-  AiOutlineSearch,
-  AiFillBell,
   AiOutlineUser,
   AiOutlineVideoCamera,
-  AiOutlineRead,
 } from 'react-icons/ai'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../auth/authSlice'
+import { BiLogOutCircle } from 'react-icons/bi'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { logout, useAuth } from '../../auth/authSlice'
+import { HiLogout } from 'react-icons/hi'
+import { useDispatch } from 'react-redux'
 
 export const Navbar = () => {
   const bg = useColorModeValue('white', 'gray.800')
@@ -37,6 +32,7 @@ export const Navbar = () => {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
   const location = useLocation()
+  const dispatch = useDispatch()
 
   const navigateToProfile = () => {
     navigate('/profile')
@@ -56,6 +52,9 @@ export const Navbar = () => {
 
   const handleLogin = () => {
     navigate('/login')
+  }
+  const handleLogout = () => {
+    dispatch(logout())
   }
   return (
     <React.Fragment>
@@ -112,7 +111,7 @@ export const Navbar = () => {
                 >
                   Mentores
                 </Button>
-                <Button
+                {/* <Button
                   w="full"
                   variant={
                     location.pathname === '/sessions' ? 'solid' : 'ghost'
@@ -122,7 +121,7 @@ export const Navbar = () => {
                   colorScheme={'blue'}
                 >
                   Sesiones
-                </Button>
+                </Button> */}
               </VStack>
             </Box>
             <chakra.a
@@ -149,7 +148,7 @@ export const Navbar = () => {
               >
                 Mentores
               </Button>
-              <Button
+              {/* <Button
                 leftIcon={<AiOutlineVideoCamera />}
                 size="sm"
                 onClick={navigateToSessions}
@@ -157,7 +156,7 @@ export const Navbar = () => {
                 variant={location.pathname === '/sessions' ? 'solid' : 'ghost'}
               >
                 Sesiones
-              </Button>
+              </Button> */}
             </HStack>
           </HStack>
           <HStack
@@ -166,13 +165,26 @@ export const Navbar = () => {
             alignItems="center"
           >
             {isAuthenticated ? (
-              <Avatar
-                size="sm"
-                name="Dan Abrahmov"
-                src="https://bit.ly/dan-abramov"
-                onClick={navigateToProfile}
-                cursor={'pointer'}
-              />
+              <Fragment>
+                <Button
+                  onClick={navigateToProfile}
+                  cursor={'pointer'}
+                  colorScheme="blue"
+                  variant={'ghost'}
+                  size="sm"
+                >
+                  Ver mi Perfil
+                </Button>
+                <Button
+                  cursor={'pointer'}
+                  colorScheme="red"
+                  variant={'ghost'}
+                  size="sm"
+                  onClick={handleLogout}
+                >
+                  Cerrar sesión
+                </Button>
+              </Fragment>
             ) : (
               <Button onClick={handleLogin} colorScheme="blue">
                 Iniciar sesión

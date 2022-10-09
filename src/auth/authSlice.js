@@ -12,10 +12,6 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
-      state.isAuthenticated = false
-      Utils.setIsAuth(false)
-    },
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload
       Utils.setIsAuth(action.payload)
@@ -24,10 +20,20 @@ export const authSlice = createSlice({
       state.userId = action.payload
       Utils.setUserId(action.payload)
     },
+    setUser: (state, action) => {
+      state.user = action.payload
+    },
+    logout: (state, action) => {
+      state.isAuthenticated = false
+      state.userId = null
+      state.user = null
+      localStorage.clear()
+    },
   },
 })
 
-export const { logout, setIsAuthenticated, setUserId } = authSlice.actions
+export const { logout, setIsAuthenticated, setUserId, setUser } =
+  authSlice.actions
 
 export const useAuth = () => useSelector((state) => state.auth)
 

@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { Login, Register } from '../auth/components'
 import { Layout } from '../layout'
 import { Mentor } from '../mentor'
@@ -15,10 +15,14 @@ export const AppRouter = () => {
           <Route path="mentors" element={<MentorsGrid />} />
           <Route path="sessions" element={<Sessions />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="mentor" element={<Mentor />} />
+          <Route path="mentor" element={<Outlet />}>
+            <Route index element={<Navigate to="/mentors" replace={true} />} />
+            <Route path=":mentorId" element={<Mentor />} />
+          </Route>
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </HashRouter>
   )
