@@ -4,7 +4,7 @@ import React from 'react'
 
 export const Comments = () => {
   return (
-    <Box maxW="5xl" mx="auto">
+    <Box maxW="5xl" mx="auto" p="40px 32px">
       <Text as="h2" fontWeight="bold" fontSize="xl">
         Comentarios de los estudiantes
       </Text>

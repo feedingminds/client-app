@@ -14,6 +14,9 @@ import {
   Textarea,
   useColorModeValue,
   VStack,
+  Select,
+  InputGroup,
+  InputLeftAddon,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import * as React from 'react'
@@ -140,12 +143,18 @@ export const ProfileSettings = () => {
                   </FormControl>
                   <FormControl id="genre">
                     <FormLabel>Sexo</FormLabel>
-                    <Input
-                      type="text"
-                      maxLength={255}
-                      name="genre"
-                      {...getFieldProps('genre')}
-                    />
+                    <Select value={''} placeholder="Selecciona una opción">
+                      <option value="option-1">Option 1</option>
+                      <option value="option-2">Option 2</option>
+                      <option value="option-3">Option 3</option>
+                    </Select>
+                  </FormControl>
+                  <FormControl id="linkedin">
+                    <FormLabel>LinkedIn</FormLabel>
+                    <InputGroup>
+                      <InputLeftAddon children="https://www.linkedin.com/in/" />
+                      <Input placeholder="john.doe" autoComplete="off" />
+                    </InputGroup>
                   </FormControl>
                 </VStack>
               </FieldGroup>

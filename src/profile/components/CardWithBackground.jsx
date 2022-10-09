@@ -13,11 +13,6 @@ export const CardWithBackground = () => (
         src: 'https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDV8fHdvbWFufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
         name: 'Esther Felix',
       }}
-      // action={
-      //   <Button size="sm" leftIcon={<HiPencilAlt />}>
-      //     Edit
-      //   </Button>
-      // }
     >
       <CardContent>
         <Heading size="lg" fontWeight="extrabold" letterSpacing="tight">
