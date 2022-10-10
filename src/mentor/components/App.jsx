@@ -12,7 +12,7 @@ import {
   Wrap,
 } from '@chakra-ui/react'
 import * as React from 'react'
-import { HiShieldCheck, HiAcademicCap } from 'react-icons/hi'
+import { HiAcademicCap } from 'react-icons/hi'
 import { FaUniversity } from 'react-icons/fa'
 import { BiTimeFive } from 'react-icons/bi'
 import { Card } from './Card'
@@ -37,7 +37,6 @@ export const App = () => {
     experience,
     about,
   } = mentor
-  console.log({ mentor })
   return (
     <Box
       as="section"

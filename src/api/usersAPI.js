@@ -17,7 +17,10 @@ export const usersAPI = createApi({
   endpoints: (builder) => ({
     getMentors: builder.query({
       query: () => ({
-        url: '?role=MENTOR_ROLE',
+        url: '',
+        params: {
+          role: 'MENTOR_ROLE',
+        },
       }),
     }),
     getUserById: builder.query({

@@ -52,7 +52,6 @@ export const ProfileSettings = () => {
     ...profile
   } = user
   const [updateUser, { isLoading, isSuccess }] = useUpdateUserMutation()
-  // TODO: Formulario para Estudiantes
   const toast = useToast()
   React.useEffect(() => {
     if (isSuccess) {

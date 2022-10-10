@@ -1,6 +1,8 @@
 import { Box, Button, Select, SimpleGrid, Text, VStack } from '@chakra-ui/react'
-import { Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Formik, replace } from 'formik'
+import { useMemo } from 'react'
+import { Fragment, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useGetMentorsQuery } from '../api/usersAPI'
 import {
   careers,
@@ -21,6 +23,23 @@ export const MentorsGrid = () => {
   const { data } = useGetMentorsQuery()
   console.log({ mentors: data })
   const navigate = useNavigate()
+  let [searchParams, setSearchParams] = useSearchParams()
+  const params = useMemo(() => {
+    const params = {}
+    searchParams.forEach((value, key, parent) => {
+      params[key] = value
+    })
+    return params
+  }, [searchParams])
+  const handleChangeParams = (e) => {
+    if (e.target.value === '') {
+      delete params[e.target.name]
+      setSearchParams(params)
+      return
+    }
+    setSearchParams({ ...params, [e.target.name]: e.target.value })
+  }
+
   return (
     <Fragment>
       <Hero />
@@ -54,7 +73,9 @@ export const MentorsGrid = () => {
               <Select
                 placeholder="Todos..."
                 bgColor={'#fff'}
-                onChange={(e) => console.log(e.target.value)}
+                name="career"
+                onChange={handleChangeParams}
+                defaultValue={searchParams.get('career')}
               >
                 {careers.map(({ name, id }) => (
                   <option key={name} value={name}>
@@ -70,7 +91,9 @@ export const MentorsGrid = () => {
               <Select
                 placeholder="Todos..."
                 bgColor={'#fff'}
-                onChange={(e) => console.log(e.target.value)}
+                name="university"
+                onChange={handleChangeParams}
+                defaultValue={searchParams.get('university')}
               >
                 {universities.map(({ name, id }) => (
                   <option key={name} value={name}>
@@ -83,11 +106,7 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Cargo
               </Text>
-              <Select
-                placeholder="Todos..."
-                bgColor={'#fff'}
-                onChange={(e) => console.log(e.target.value)}
-              >
+              <Select placeholder="Todos..." bgColor={'#fff'}>
                 {jobs.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -99,11 +118,7 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Experiencia
               </Text>
-              <Select
-                placeholder="Todos..."
-                bgColor={'#fff'}
-                onChange={(e) => console.log(e.target.value)}
-              >
+              <Select placeholder="Todos..." bgColor={'#fff'}>
                 {experiences.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -115,11 +130,7 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Nacional/Internacional
               </Text>
-              <Select
-                placeholder="Todos..."
-                bgColor={'#fff'}
-                onChange={(e) => console.log(e.target.value)}
-              >
+              <Select placeholder="Todos..." bgColor={'#fff'}>
                 {nationalities.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -131,11 +142,7 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Sexo
               </Text>
-              <Select
-                placeholder="Todos..."
-                bgColor={'#fff'}
-                onChange={(e) => console.log(e.target.value)}
-              >
+              <Select placeholder="Todos..." bgColor={'#fff'}>
                 {genres.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
