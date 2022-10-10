@@ -1,7 +1,6 @@
 import { Box, Button, Select, SimpleGrid, Text, VStack } from '@chakra-ui/react'
-import { Formik, replace } from 'formik'
 import { useMemo } from 'react'
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useGetMentorsQuery } from '../api/usersAPI'
 import {
