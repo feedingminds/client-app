@@ -1,4 +1,12 @@
-import { Box, Button, Select, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Select,
+  SimpleGrid,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 import { useMemo } from 'react'
 import { Fragment } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -19,10 +27,16 @@ import { UserInfo } from './components/UserInfo'
 import './index.css'
 
 export const MentorsGrid = () => {
-  const { data } = useGetMentorsQuery()
-  console.log({ mentors: data })
-  const navigate = useNavigate()
   let [searchParams, setSearchParams] = useSearchParams()
+  const { data, isLoading } = useGetMentorsQuery({
+    career: searchParams.get('career') || undefined,
+    university: searchParams.get('university') || undefined,
+    job: searchParams.get('job') || undefined,
+    experience: searchParams.get('experience') || undefined,
+    nationality: searchParams.get('nationality') || undefined,
+    genre: searchParams.get('genre') || undefined,
+  })
+  const navigate = useNavigate()
   const params = useMemo(() => {
     const params = {}
     searchParams.forEach((value, key, parent) => {
@@ -105,7 +119,13 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Cargo
               </Text>
-              <Select placeholder="Todos..." bgColor={'#fff'}>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                name="job"
+                onChange={handleChangeParams}
+                defaultValue={searchParams.get('job')}
+              >
                 {jobs.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -117,7 +137,13 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Experiencia
               </Text>
-              <Select placeholder="Todos..." bgColor={'#fff'}>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                name="experience"
+                onChange={handleChangeParams}
+                defaultValue={searchParams.get('experience')}
+              >
                 {experiences.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -129,7 +155,13 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Nacional/Internacional
               </Text>
-              <Select placeholder="Todos..." bgColor={'#fff'}>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                name="nationality"
+                onChange={handleChangeParams}
+                defaultValue={searchParams.get('nationality')}
+              >
                 {nationalities.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -141,7 +173,13 @@ export const MentorsGrid = () => {
               <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Sexo
               </Text>
-              <Select placeholder="Todos..." bgColor={'#fff'}>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                name="genre"
+                onChange={handleChangeParams}
+                defaultValue={searchParams.get('genre')}
+              >
                 {genres.map(({ name, id }) => (
                   <option key={name} value={name}>
                     {name}
@@ -150,36 +188,54 @@ export const MentorsGrid = () => {
               </Select>
             </VStack>
           </VStack>
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3, '2xl': 4 }} spacing="6">
-            {data?.users.map((user) => {
-              const {
-                id,
-                name,
-                career,
-                photoURL,
-                students = 100,
-                average,
-              } = user
-              return (
-                <CardWithAvatar key={id} avatarProps={{ src: photoURL, name }}>
-                  <UserInfo mt="3" name={name} career={career} />
-                  <UserExtraInfo my="4" count={students} rating={average} />
-                  <Button
-                    variant="outline"
-                    colorScheme="blue"
-                    rounded="full"
-                    size="sm"
-                    width="full"
-                    onClick={() => {
-                      navigate(`/mentor/${id}`)
-                    }}
+          {isLoading ? (
+            <Box
+              width="100%"
+              display={'flex'}
+              alignItems="center"
+              justifyContent={'center'}
+            >
+              <CircularProgress isIndeterminate color="blue.500" />
+            </Box>
+          ) : (
+            <SimpleGrid
+              columns={{ base: 1, md: 2, lg: 3, '2xl': 4 }}
+              spacing="6"
+              height={'fit-content'}
+            >
+              {data?.users.map((user) => {
+                const {
+                  id,
+                  name,
+                  career,
+                  photoURL,
+                  students = 100,
+                  average,
+                } = user
+                return (
+                  <CardWithAvatar
+                    key={id}
+                    avatarProps={{ src: photoURL, name }}
                   >
-                    Ver más
-                  </Button>
-                </CardWithAvatar>
-              )
-            })}
-          </SimpleGrid>
+                    <UserInfo mt="3" name={name} career={career} />
+                    <UserExtraInfo my="4" count={students} rating={average} />
+                    <Button
+                      variant="outline"
+                      colorScheme="blue"
+                      rounded="full"
+                      size="sm"
+                      width="full"
+                      onClick={() => {
+                        navigate(`/mentor/${id}`)
+                      }}
+                    >
+                      Ver más
+                    </Button>
+                  </CardWithAvatar>
+                )
+              })}
+            </SimpleGrid>
+          )}
         </Box>
       </Box>
     </Fragment>
