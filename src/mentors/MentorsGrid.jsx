@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Image,
-  Select,
-  SimpleGrid,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Button, Select, SimpleGrid, Text, VStack } from '@chakra-ui/react'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetMentorsQuery } from '../api/usersAPI'

@@ -25,18 +25,31 @@ import { HiCloudUpload } from 'react-icons/hi'
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../../api/usersAPI'
 import { useAuth } from '../../auth/authSlice'
 import { FieldGroup } from './FieldGroup'
+import {
+  careers,
+  experiences,
+  genres,
+  jobs,
+  nationalities,
+  universities,
+} from '../../data'
 // import * as Yup from 'yup'
 
 export const ProfileSettings = () => {
   const { userId } = useAuth()
   const colorMode = useColorModeValue('gray.500', 'whiteAlpha.600')
   const { data: user = {} } = useGetUserByIdQuery(userId)
+  console.log({ user })
   const {
-    name = '',
-    email = '',
-    profession = '',
-    photoURL = '',
-    bio = '',
+    comments,
+    average,
+    rating,
+    email,
+    id,
+    role,
+    students,
+    photoURL,
+    ...profile
   } = user
   const [updateUser, { isLoading, isSuccess }] = useUpdateUserMutation()
   // TODO: Formulario para Estudiantes
@@ -54,7 +67,7 @@ export const ProfileSettings = () => {
 
   return (
     <Formik
-      initialValues={{ name, email, profession, photoURL, bio }}
+      initialValues={profile}
       enableReinitialize
       onSubmit={(values) => {
         console.log({ values })
@@ -87,13 +100,7 @@ export const ProfileSettings = () => {
                   </FormControl>
                   <FormControl id="email">
                     <FormLabel>Email</FormLabel>
-                    <Input
-                      type="email"
-                      isReadOnly
-                      name="email"
-                      {...getFieldProps('email')}
-                      disabled
-                    />
+                    <Input type="email" isReadOnly disabled value={email} />
                   </FormControl>
                   <FormControl id="about">
                     <FormLabel>Sobre mí</FormLabel>
@@ -113,69 +120,106 @@ export const ProfileSettings = () => {
                 <VStack width="full" spacing="6">
                   <FormControl id="career">
                     <FormLabel>Carrera</FormLabel>
-                    <Input
-                      type="text"
-                      maxLength={255}
+                    <Select
+                      placeholder="Selecciona una opción"
                       name="career"
                       {...getFieldProps('career')}
-                    />
+                    >
+                      {careers.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl id="university">
                     <FormLabel>Centro de Estudios</FormLabel>
-                    <Input
-                      type="text"
-                      maxLength={255}
+                    <Select
+                      placeholder="Selecciona una opción"
                       name="university"
                       {...getFieldProps('university')}
-                    />
+                    >
+                      {universities.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl id="job">
                     <FormLabel>Cargo</FormLabel>
-                    <Input
-                      type="text"
-                      maxLength={255}
+                    <Select
+                      placeholder="Selecciona una opción"
                       name="job"
                       {...getFieldProps('job')}
-                    />
+                    >
+                      {jobs.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl id="experience">
                     <FormLabel>Experiencia</FormLabel>
-                    <Input
-                      type="text"
-                      maxLength={255}
+                    <Select
+                      placeholder="Selecciona una opción"
                       name="experience"
                       {...getFieldProps('experience')}
-                    />
+                    >
+                      {experiences.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl id="nationality">
                     <FormLabel>Nacional/Internacional</FormLabel>
-                    <Input
-                      type="text"
-                      maxLength={255}
+                    <Select
+                      placeholder="Selecciona una opción"
                       name="nationality"
                       {...getFieldProps('nationality')}
-                    />
+                    >
+                      {nationalities.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
                   </FormControl>
                   <FormControl id="genre">
                     <FormLabel>Sexo</FormLabel>
-                    <Select value={''} placeholder="Selecciona una opción">
-                      <option value="option-1">Option 1</option>
-                      <option value="option-2">Option 2</option>
-                      <option value="option-3">Option 3</option>
+                    <Select
+                      placeholder="Selecciona una opción"
+                      name="genre"
+                      {...getFieldProps('genre')}
+                    >
+                      {genres.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
                     </Select>
                   </FormControl>
                   <FormControl id="linkedin">
                     <FormLabel>LinkedIn</FormLabel>
                     <InputGroup>
                       <InputLeftAddon children="https://www.linkedin.com/in/" />
-                      <Input placeholder="john.doe" autoComplete="off" />
+                      <Input
+                        placeholder="john.doe"
+                        autoComplete="off"
+                        name="linkedin"
+                        {...getFieldProps('linkedin')}
+                      />
                     </InputGroup>
                   </FormControl>
                 </VStack>
               </FieldGroup>
               <FieldGroup title="Foto de Perfil">
                 <Stack direction="row" spacing="6" align="center" width="full">
-                  <Avatar size="xl" name={name} src={photoURL} />
+                  {/* //TODO: Mostrar avatar  */}
+                  <Avatar size="xl" name={profile.name} src={photoURL} />
                   <Box>
                     <HStack spacing="5">
                       <Button leftIcon={<HiCloudUpload />}>Cambiar foto</Button>

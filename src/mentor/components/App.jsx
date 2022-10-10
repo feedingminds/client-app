@@ -25,7 +25,19 @@ import { FiLinkedin } from 'react-icons/fi'
 export const App = () => {
   const { mentorId } = useParams()
   const { data: mentor = {} } = useGetUserByIdQuery(mentorId)
-  const { name, photoURL, rating, average } = mentor
+  const {
+    name,
+    photoURL,
+    rating,
+    average,
+    linkedin,
+    job,
+    university,
+    career,
+    experience,
+    about,
+  } = mentor
+  console.log({ mentor })
   return (
     <Box
       as="section"
@@ -72,12 +84,18 @@ export const App = () => {
                   color={useColorModeValue('gray.500', 'gray.300')}
                   lineHeight="1"
                 >
-                  @meldesigner
+                  @{linkedin}
                 </Text>
-                <Icon as={FiLinkedin} color="blue.500" />
+                <a
+                  target={'_blank'}
+                  href={`https://www.linkedin.com/in/${linkedin}`}
+                  rel="noreferrer"
+                >
+                  <Icon as={FiLinkedin} color="blue.500" />
+                </a>
               </HStack>
             </Stack>
-            <Text mt="2">Head Of Customer Experience</Text>
+            <Text mt="2">{job}</Text>
             <Wrap shouldWrapChildren my="4" spacing="4">
               <VStack flexDir={'column'} alignItems="flex-start">
                 <CustomerReviews
@@ -94,7 +112,7 @@ export const App = () => {
                     fontWeight="medium"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    <b>Economía</b>
+                    <b>{career}</b>
                   </Text>
                 </HStack>
                 <HStack spacing="1">
@@ -104,7 +122,7 @@ export const App = () => {
                     fontWeight="medium"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Universidad Nacional Federico Villareal
+                    {university}
                   </Text>
                 </HStack>
                 <HStack spacing="1">
@@ -114,7 +132,7 @@ export const App = () => {
                     fontWeight="medium"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Entre 5 y 10 años de experiencia trabajando
+                    {experience}
                   </Text>
                 </HStack>
               </VStack>
@@ -122,19 +140,8 @@ export const App = () => {
             <Text fontWeight="semibold" mt="8" mb="2">
               Sobre mí
             </Text>
-            <Box fontSize="sm">
-              Tengo 8 años experiencia en el desarrollo de Proyectos de Customer
-              Experience en Perú y Ecuador en sectores de Banca, Seguros,
-              Telecomunicaciones, Aviación, hotelería y etc.
-              <br />
-              Especialización en Customer Experience Management (CEM) por ESIC –
-              ICEMED e IZO, Finanzas por la Universidad del Pacíﬁco y
-              Marketing-Operaciones por la Universidad ESAN. Estudiante de la
-              Maestría de Dirección Comercial y Marketing de la Escuela de
-              Dirección PAD de Piura.
-              <br />
-            </Box>
-            <Text fontWeight="semibold" mt="8" mb="2">
+            <Box fontSize="sm">{about}</Box>
+            {/* <Text fontWeight="semibold" mt="8" mb="2">
               Intereses
             </Text>
             <Wrap
@@ -149,7 +156,7 @@ export const App = () => {
                   </Tag>
                 )
               )}
-            </Wrap>
+            </Wrap> */}
           </Box>
         </Stack>
         <Button mt="8" width="full" colorScheme="blue" display={{ md: 'none' }}>
