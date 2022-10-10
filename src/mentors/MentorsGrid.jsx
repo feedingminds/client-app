@@ -10,6 +10,14 @@ import {
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetMentorsQuery } from '../api/usersAPI'
+import {
+  careers,
+  experiences,
+  genres,
+  jobs,
+  nationalities,
+  universities,
+} from '../data'
 import { CardWithAvatar } from './components/CardWithAvatar'
 import { Hero } from './components/Hero'
 import { UserExtraInfo } from './components/UserExtraInfo'
@@ -41,15 +49,106 @@ export const MentorsGrid = () => {
           }}
           gap="24px"
         >
-          <VStack w="300px">
+          <VStack
+            w={{
+              base: '100%',
+              md: '300px',
+            }}
+          >
             <VStack w="100%" alignItems={'flex-start'}>
-              <Text fontSize="md" fontWeight="bold">
+              <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
                 Carreras
               </Text>
-              <Select placeholder="Select option" bgColor={'#fff'}>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {careers.map(({ name, id }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </VStack>
+            <VStack w="100%" alignItems={'flex-start'}>
+              <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
+                Centro de estudios
+              </Text>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {universities.map(({ name, id }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </VStack>
+            <VStack w="100%" alignItems={'flex-start'}>
+              <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
+                Cargo
+              </Text>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {jobs.map(({ name, id }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </VStack>
+            <VStack w="100%" alignItems={'flex-start'}>
+              <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
+                Experiencia
+              </Text>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {experiences.map(({ name, id }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </VStack>
+            <VStack w="100%" alignItems={'flex-start'}>
+              <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
+                Nacional/Internacional
+              </Text>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {nationalities.map(({ name, id }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </VStack>
+            <VStack w="100%" alignItems={'flex-start'}>
+              <Text fontSize="md" fontWeight="bold" color={'blue.500'}>
+                Sexo
+              </Text>
+              <Select
+                placeholder="Todos..."
+                bgColor={'#fff'}
+                onChange={(e) => console.log(e.target.value)}
+              >
+                {genres.map(({ name, id }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
               </Select>
             </VStack>
           </VStack>
