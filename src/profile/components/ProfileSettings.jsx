@@ -20,7 +20,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
-import * as React from 'react'
+import React, { useState } from 'react'
 import { HiCloudUpload } from 'react-icons/hi'
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../../api/usersAPI'
 import { useAuth } from '../../auth/authSlice'
@@ -52,7 +52,9 @@ export const ProfileSettings = () => {
     ...profile
   } = user
   const [updateUser, { isLoading, isSuccess }] = useUpdateUserMutation()
+  const [imageFile, setImageFile] = useState()
   const toast = useToast()
+  const inputRef = React.useRef()
   React.useEffect(() => {
     if (isSuccess) {
       toast({
@@ -63,14 +65,41 @@ export const ProfileSettings = () => {
       })
     }
   }, [isSuccess])
-
+  const handleChangeAvatar = () => {
+    inputRef.current.click()
+  }
+  const handleFileInputChange = (e) => {
+    setImageFile(e.target.files[0])
+  }
   return (
     <Formik
       initialValues={profile}
       enableReinitialize
-      onSubmit={(values) => {
-        console.log({ values })
-        updateUser([userId, values])
+      onSubmit={async (values) => {
+        try {
+          let photoURL
+          if (imageFile) {
+            const cloudinaryURL = import.meta.env.VITE_APP_CLOUDINARY_URL
+            const formData = new FormData()
+            formData.append('upload_preset', 'feeding-minds')
+            formData.append('file', imageFile)
+            const resp = await fetch(cloudinaryURL, {
+              method: 'POST',
+              body: formData,
+            })
+
+            const { secure_url } = await resp.json()
+            console.log({ secure_url })
+            photoURL = secure_url
+          }
+          if (photoURL) {
+            updateUser([userId, { ...values, photoURL }])
+            return
+          }
+          updateUser([userId, values])
+        } catch (err) {
+          console.log(err)
+        }
       }}
     >
       {({ getFieldProps, handleSubmit }) => (
@@ -221,7 +250,21 @@ export const ProfileSettings = () => {
                   <Avatar size="xl" name={profile.name} src={photoURL} />
                   <Box>
                     <HStack spacing="5">
-                      <Button leftIcon={<HiCloudUpload />}>Cambiar foto</Button>
+                      <Button
+                        leftIcon={<HiCloudUpload />}
+                        onClick={handleChangeAvatar}
+                      >
+                        Cambiar foto
+                      </Button>
+                      <input
+                        ref={inputRef}
+                        onChange={handleFileInputChange}
+                        style={{
+                          display: 'none',
+                        }}
+                        type="file"
+                        accept="image/*"
+                      />
                       <Button variant="ghost" colorScheme="red">
                         Borrar
                       </Button>
