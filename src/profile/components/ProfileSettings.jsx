@@ -33,6 +33,7 @@ import {
   nationalities,
   universities,
 } from '../../data'
+import { Schedule } from './Schedule'
 // import * as Yup from 'yup'
 
 export const ProfileSettings = () => {
@@ -274,6 +275,9 @@ export const ProfileSettings = () => {
                     </Text>
                   </Box>
                 </Stack>
+              </FieldGroup>
+              <FieldGroup title="Horario Disponible">
+                <Schedule />
               </FieldGroup>
             </Stack>
             <FieldGroup mt="8">

@@ -8,6 +8,7 @@ import {
   Tag,
   Text,
   useColorModeValue,
+  useDisclosure,
   VStack,
   Wrap,
 } from '@chakra-ui/react'
@@ -21,10 +22,13 @@ import { Comments } from './Comments'
 import { useGetUserByIdQuery } from '../../api/usersAPI'
 import { useParams } from 'react-router-dom'
 import { FiLinkedin } from 'react-icons/fi'
+import { Session } from './Session'
 
 export const App = () => {
   const { mentorId } = useParams()
   const { data: mentor = {} } = useGetUserByIdQuery(mentorId)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   const {
     name,
     photoURL,
@@ -45,6 +49,7 @@ export const App = () => {
       minH="calc(100vh - 77px)"
       position="relative"
     >
+      <Session isOpen={isOpen} onClose={onClose} />
       <Box
         position="absolute"
         top={0}
@@ -65,8 +70,9 @@ export const App = () => {
               width="full"
               colorScheme="blue"
               display={{ base: 'none', md: 'initial' }}
+              onClick={onOpen}
             >
-              Contáctame
+              Agendar sesión
             </Button>
           </Stack>
           <Box>

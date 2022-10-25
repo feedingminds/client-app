@@ -9,7 +9,7 @@ import { UserInfo } from './UserInfo'
 export const CardWithBackground = () => {
   const { userId } = useAuth()
   const { data: user = {} } = useGetUserById(userId)
-  const { name } = user
+  const { name, photoURL, job } = user
   return (
     <Box as="section" pt="20" pb="12" position="relative">
       <Box position="absolute" inset="0" height="32" bg="blue.600" />
@@ -17,16 +17,15 @@ export const CardWithBackground = () => {
         maxW="xl"
         avatarProps={{
           name,
+          src: photoURL,
         }}
       >
         <CardContent>
           <Heading size="lg" fontWeight="extrabold" letterSpacing="tight">
             {name}
           </Heading>
-          {/* <Text color={useColorModeValue('gray.600', 'gray.400')}>
-            Frontend Developer &amp; UI Designer
-          </Text>
-          <UserInfo
+          <Text color={useColorModeValue('gray.600', 'gray.400')}>{job}</Text>
+          {/* <UserInfo
             career="Economía"
             university="Univesidad Peruana de Ciencias Aplicadas"
             linkedin="@john.doe"
