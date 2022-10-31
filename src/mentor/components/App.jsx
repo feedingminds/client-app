@@ -5,7 +5,6 @@ import {
   HStack,
   Icon,
   Stack,
-  Tag,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -163,8 +162,14 @@ export const App = () => {
             </Wrap> */}
           </Box>
         </Stack>
-        <Button mt="8" width="full" colorScheme="blue" display={{ md: 'none' }}>
-          Contáctame{' '}
+        <Button
+          mt="8"
+          width="full"
+          colorScheme="blue"
+          display={{ md: 'none' }}
+          onClick={onOpen}
+        >
+          Agendar una sesión{' '}
         </Button>
       </Card>
       <Session
