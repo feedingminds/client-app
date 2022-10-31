@@ -49,7 +49,6 @@ export const App = () => {
       minH="calc(100vh - 77px)"
       position="relative"
     >
-      <Session isOpen={isOpen} onClose={onClose} />
       <Box
         position="absolute"
         top={0}
@@ -168,6 +167,11 @@ export const App = () => {
           Contáctame{' '}
         </Button>
       </Card>
+      <Session
+        isOpen={isOpen}
+        onClose={onClose}
+        title={`Reunirse con: ${name}`}
+      />
       <Comments />
     </Box>
   )

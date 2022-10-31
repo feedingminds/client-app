@@ -18,9 +18,10 @@ import {
   InputGroup,
   InputLeftAddon,
   useToast,
+  Image,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import React from 'react'
 import { HiCloudUpload } from 'react-icons/hi'
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../../api/usersAPI'
 import { useAuth } from '../../auth/authSlice'
@@ -34,6 +35,7 @@ import {
   universities,
 } from '../../data'
 import { Schedule } from './Schedule'
+import { useFilePicker } from 'use-file-picker'
 // import * as Yup from 'yup'
 
 export const ProfileSettings = () => {
@@ -53,9 +55,16 @@ export const ProfileSettings = () => {
     ...profile
   } = user
   const [updateUser, { isLoading, isSuccess }] = useUpdateUserMutation()
-  const [imageFile, setImageFile] = useState()
+  const [openFileSelector, { filesContent, plainFiles, clear }] = useFilePicker(
+    {
+      accept: 'image/*',
+      multiple: false,
+      readAs: 'DataURL',
+      maxFileSize: 0.7,
+    }
+  )
+  console.log({ plainFiles, filesContent, photoURL })
   const toast = useToast()
-  const inputRef = React.useRef()
   React.useEffect(() => {
     if (isSuccess) {
       toast({
@@ -66,12 +75,6 @@ export const ProfileSettings = () => {
       })
     }
   }, [isSuccess])
-  const handleChangeAvatar = () => {
-    inputRef.current.click()
-  }
-  const handleFileInputChange = (e) => {
-    setImageFile(e.target.files[0])
-  }
   return (
     <Formik
       initialValues={profile}
@@ -79,11 +82,11 @@ export const ProfileSettings = () => {
       onSubmit={async (values) => {
         try {
           let photoURL
-          if (imageFile) {
+          if (plainFiles[0]) {
             const cloudinaryURL = import.meta.env.VITE_APP_CLOUDINARY_URL
             const formData = new FormData()
             formData.append('upload_preset', 'feeding-minds')
-            formData.append('file', imageFile)
+            formData.append('file', plainFiles[0])
             const resp = await fetch(cloudinaryURL, {
               method: 'POST',
               body: formData,
@@ -247,31 +250,37 @@ export const ProfileSettings = () => {
               </FieldGroup>
               <FieldGroup title="Foto de Perfil">
                 <Stack direction="row" spacing="6" align="center" width="full">
-                  {/* //TODO: Mostrar avatar  */}
-                  <Avatar size="xl" name={profile.name} src={photoURL} />
+                  {filesContent[0]?.content ? (
+                    <Image
+                      boxSize="100px"
+                      objectFit="cover"
+                      src={filesContent[0]?.content}
+                      alt={profile.name}
+                      borderRadius="50%"
+                    />
+                  ) : (
+                    <Avatar size="xl" name={profile.name} src={photoURL} />
+                  )}
                   <Box>
                     <HStack spacing="5">
                       <Button
                         leftIcon={<HiCloudUpload />}
-                        onClick={handleChangeAvatar}
+                        onClick={openFileSelector}
                       >
                         Cambiar foto
                       </Button>
-                      <input
-                        ref={inputRef}
-                        onChange={handleFileInputChange}
-                        style={{
-                          display: 'none',
-                        }}
-                        type="file"
-                        accept="image/*"
-                      />
-                      <Button variant="ghost" colorScheme="red">
-                        Borrar
-                      </Button>
+                      {filesContent[0]?.content && (
+                        <Button
+                          variant="ghost"
+                          colorScheme="red"
+                          onClick={clear}
+                        >
+                          Limpiar
+                        </Button>
+                      )}
                     </HStack>
                     <Text fontSize="sm" mt="3" color={colorMode}>
-                      .jpg, .gif, or .png. Max file size 700K.
+                      .jpg, .gif, or .png. Tamaño máximo de archivo 700K.
                     </Text>
                   </Box>
                 </Stack>
