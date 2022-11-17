@@ -21,7 +21,6 @@ import {
   Image,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
-import React from 'react'
 import { HiCloudUpload } from 'react-icons/hi'
 import { useGetUserByIdQuery, useUpdateUserMutation } from '../../api/usersAPI'
 import { useAuth } from '../../auth/authSlice'
@@ -34,9 +33,11 @@ import {
   nationalities,
   universities,
 } from '../../data'
-import { Schedule } from './Schedule'
 import { useFilePicker } from 'use-file-picker'
-// import * as Yup from 'yup'
+import { Select as AntdSelect } from 'antd'
+import { optionsDays, optionsDuration, tagRender } from '../utils'
+import React from 'react'
+import { HourSelect } from './HourSelect'
 
 export const ProfileSettings = () => {
   const { userId } = useAuth()
@@ -54,6 +55,7 @@ export const ProfileSettings = () => {
     photoURL,
     ...profile
   } = user
+
   const [updateUser, { isLoading, isSuccess }] = useUpdateUserMutation()
   const [openFileSelector, { filesContent, plainFiles, clear }] = useFilePicker(
     {
@@ -75,11 +77,13 @@ export const ProfileSettings = () => {
       })
     }
   }, [isSuccess])
+
   return (
     <Formik
       initialValues={profile}
       enableReinitialize
       onSubmit={async (values) => {
+        console.log({ values })
         try {
           let photoURL
           if (plainFiles[0]) {
@@ -106,7 +110,7 @@ export const ProfileSettings = () => {
         }
       }}
     >
-      {({ getFieldProps, handleSubmit }) => (
+      {({ getFieldProps, handleSubmit, setFieldValue, values }) => (
         <Box px={{ base: '4', md: '10' }} py="16" maxWidth="3xl" mx="auto">
           <form
             id="settings-form"
@@ -285,8 +289,49 @@ export const ProfileSettings = () => {
                   </Box>
                 </Stack>
               </FieldGroup>
+
+              {/*//* Schedule */}
               <FieldGroup title="Horario Disponible">
-                <Schedule />
+                <VStack width="full" spacing="6">
+                  <FormControl id="days">
+                    <FormLabel>Días</FormLabel>
+                    <AntdSelect
+                      mode="multiple"
+                      showArrow
+                      tagRender={tagRender}
+                      style={{
+                        width: '100%',
+                      }}
+                      options={optionsDays}
+                      size="large"
+                      placeholder="Seleccione los días"
+                      name="schedule.days"
+                      {...getFieldProps('schedule.days')}
+                      onChange={(value) =>
+                        setFieldValue('schedule.days', value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl id="duration">
+                    <FormLabel>Duración</FormLabel>
+                    <Select
+                      placeholder="Selecciona una opción"
+                      name={'schedule.duration'}
+                      {...getFieldProps('schedule.duration')}
+                    >
+                      {optionsDuration.map(({ name, id }) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <HourSelect
+                    name="schedule.hours"
+                    value={values.schedule?.hours}
+                    onChange={(value) => setFieldValue('schedule.hours', value)}
+                  />
+                </VStack>
               </FieldGroup>
             </Stack>
             <FieldGroup mt="8">
