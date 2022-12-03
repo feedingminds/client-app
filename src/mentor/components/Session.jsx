@@ -1,10 +1,7 @@
 import {
-  Button,
   Modal,
-  ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react'
@@ -25,15 +22,7 @@ export const Session = ({ isOpen, onClose, title }) => {
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}>
-          <Calendar />
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
-            Siguiente
-          </Button>
-          <Button onClick={onClose}>Cancelar</Button>
-        </ModalFooter>
+        <Calendar onClose={onClose} />
       </ModalContent>
     </Modal>
   )

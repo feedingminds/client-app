@@ -42,11 +42,18 @@ export const App = () => {
     career,
     experience,
     about,
+    meet,
   } = mentor
   const { isAuthenticated } = useAuth()
 
   const isUnapprovedMentor =
-    !photoURL || !job || !university || !career || !experience || !about
+    !photoURL ||
+    !job ||
+    !university ||
+    !career ||
+    !experience ||
+    !about ||
+    !meet
   const colorText = useColorModeValue('gray.600', 'gray.300')
   const colorLinkedIn = useColorModeValue('gray.500', 'gray.300')
   React.useEffect(() => {

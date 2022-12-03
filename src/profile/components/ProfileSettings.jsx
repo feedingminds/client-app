@@ -326,6 +326,19 @@ export const ProfileSettings = () => {
                       ))}
                     </Select>
                   </FormControl>
+                  <FormControl id="meet">
+                    <FormLabel>Enlace de Google Meet</FormLabel>
+                    <InputGroup>
+                      <InputLeftAddon children="https://meet.google.com/" />
+                      <Input
+                        type="text"
+                        placeholder="bmi-dxiv-bia"
+                        autoComplete="off"
+                        name="meet"
+                        {...getFieldProps('meet')}
+                      />
+                    </InputGroup>
+                  </FormControl>
                   <HourSelect
                     name="schedule.hours"
                     value={values.schedule?.hours}
